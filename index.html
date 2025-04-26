@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MurphDunks</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="branding">
+        <a href="index.html" class="brand-link">MurphDunks</a>
+      </div>
+      <nav class="nav-right">
+        <div class="stats-inline">
+          <span>Total Bets: $0 | Charity: $0</span>
+        </div>
+        <div class="nav-links">
+          <a href="about.html">About</a>
+          <a href="progress.html">Progress</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-container">
+      <h1>Will Murph Dunk or Run a Sub 3:10 Marathon?</h1>
+      <p>Place your bets. 80% of the pool goes to the winning side. 20% for charity.</p>
+      <a href="#betting" class="down-arrow">↓</a>
+    </div>
+  </section>
+
+  <section class="betting-section" id="betting">
+    <div class="container betting-container">
+      <div class="bet-box">
+        <h2>Will Murph Dunk?</h2>
+        <div class="bet-stats">
+          <p><strong>$ For:</strong> $500</p>
+          <p><strong>$ Against:</strong> $200</p>
+          <p><strong>Implied Odds:</strong> 71%</p>
+        </div>
+        <div class="chart-placeholder">Chart Placeholder</div>
+        <div class="bet-buttons">
+          <button class="buy-btn">Buy</button>
+          <button class="sell-btn">Sell</button>
+        </div>
+        <canvas id="dunkChart" width="300" height="100"></canvas>
+      </div>
+
+      <div class="bet-box">
+        <h2>Will Murph Run a 3:10 Marathon?</h2>
+        <div class="bet-stats">
+          <p><strong>$ For:</strong> $300</p>
+          <p><strong>$ Against:</strong> $500</p>
+          <p><strong>Implied Odds:</strong> 37%</p>
+        </div>
+        <div class="chart-placeholder">Chart Placeholder</div>
+        <div class="bet-buttons">
+          <button class="buy-btn">Buy</button>
+          <button class="sell-btn">Sell</button>
+        </div>
+        <canvas id="marathonChart" width="300" height="100"></canvas>
+      </div>
+    </div>
+  </section>
+  
+    <!-- Twitter Integration Section (Smooth Transition) -->
+    <section id="twitter" class="twitter-feed">
+      <h2>Join the Conversation</h2>
+      <p>Check out the latest updates and tweets below! (Placeholder for Twitter Feed)</p>
+      <!-- Placeholder for Twitter Feed -->
+      <div class="twitter-widget-placeholder">
+        <p>Twitter widget will be integrated here once account/hashtag is created.</p>
+      </div>
+    </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 MurphDunks. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.down-arrow').addEventListener('click', () => {
+      document.querySelector('#betting').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>
