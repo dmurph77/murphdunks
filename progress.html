@@ -4,27 +4,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <title>Progress - MurphDunks</title>
   <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="dark-bg">
-    <header class="navbar">
-        <div class="container nav-container">
-          <div class="branding">
-            <a href="index.html" class="brand-link">MurphDunks</a>
-          </div>
-          <nav class="nav-right">
-            <div class="stats-inline">
-              <span>Total Bets: $0 | Charity: $0</span>
-            </div>
-            <div class="nav-links">
-              <a href="about.html">About</a>
-              <a href="progress.html">Progress</a>
-              <a href="faq.html">FAQ</a>
-            </div>
-          </nav>
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="branding">
+        <a href="index.html" class="brand-link">MurphDunks</a>
+      </div>
+      <div class="nav-links">
+        <div style="flex: 1;">
+          <a href="faq.html">FAQ</a>
+          <a href="progress.html">Progress</a>
+          <a href="about.html">About</a> &nbsp;
         </div>
-      </header>
+        <div id="navTotals" style="flex-shrink: 0;">
+          Total Predictions: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <main class="content">
     <section class="container" style="padding-top: 20px;">
@@ -54,5 +56,53 @@
       </div>
     </section>
   </main>
+
+  <script>
+    async function loadStats() {
+      try {
+        const apiBaseUrl = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://localhost:5000'
+  : '';
+
+const response = await fetch(`${apiBaseUrl}/api/bets`);
+        const data = await response.json();
+    
+        if (data.success) {
+          const stats = data.stats;
+    
+        // Totals
+        document.getElementById('totalBets').innerText = Math.round(stats.totalBets);
+        document.getElementById('charityAmount').innerText = Math.round(stats.charityAmount);
+        }
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+    
+    // Call it once the page loads
+    window.onload = () => {
+    loadStats();
+    setInterval(loadStats, 10000); // Refresh stats every 10 seconds
+    };
+
+    </script>
+
+<footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
+  <p style="margin-bottom: 10px;">
+    <a href="https://github.com/dmurph77/murphdunks" target="_blank" style="margin: 0 10px; color: yellow;">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://twitter.com/murphdunks target="_blank" style="margin: 0 10px; color: yellow;">
+      <i class="fab fa-x-twitter"></i> <!-- or use fa-twitter if you prefer -->
+    </a>
+    <a href="https://www.strava.com/athletes/108903657" target="_blank" style="margin: 0 10px; color: yellow;">
+      <i class="fab fa-strava"></i>
+    </a>
+  </p>
+  <p style="font-size: 0.9rem; color: gray;">
+    © 2025 MurphDunks. All rights reserved.
+  </p>
+</footer>
+
 </body>
 </html>

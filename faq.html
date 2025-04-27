@@ -6,25 +6,26 @@
   <title>FAQ - MurphDunks</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="container nav-container">
-          <div class="branding">
-            <a href="index.html" class="brand-link">MurphDunks</a>
-          </div>
-          <nav class="nav-right">
-            <div class="stats-inline">
-              <span>Total Bets: $0 | Charity: $0</span>
-            </div>
-            <div class="nav-links">
-              <a href="about.html">About</a>
-              <a href="progress.html">Progress</a>
-              <a href="faq.html">FAQ</a>
-            </div>
-          </nav>
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="branding">
+        <a href="index.html" class="brand-link">MurphDunks</a>
+      </div>
+      <div class="nav-links">
+        <div style="flex: 1;">
+          <a href="faq.html">FAQ</a>
+          <a href="progress.html">Progress</a>
+          <a href="about.html">About</a> &nbsp;
         </div>
-      </header>
+        <div id="navTotals" style="flex-shrink: 0;">
+          Total Predictions: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <section class="container" style="padding-top: 20px;">
     <h1>Frequently Asked Questions</h1>
@@ -38,17 +39,20 @@
       </ol>
     </p>
 
-    <h3 style="color: yellow;">How do the bets work?</h3>
-    <p>You can place a bet FOR or AGAINST each of Murph’s goals. Winnings are split proportionally among those on the correct side of the bet.</p>
+    <h3 style="color: yellow;">How do the predictions work?</h3>
+    <p>You can place a prediction FOR or AGAINST each of Murph’s goals. Winnings are split proportionally among those on the correct side of the prediction.</p>
 
     <h3 style="color: yellow;">What happens to the money?</h3>
-    <p>80% of all funds go to the winning side of each bet. 20% is donated to charity regardless of the outcome. I will store the pots in a FDIC-insured money market fund until payouts.</p>
+    <p>80% of all funds go to the winning side of each prediction. 20% is donated to charity regardless of the outcome. I will store the pots in a FDIC-insured money market fund until payouts.</p>
 
     <h3 style="color: yellow;">Is this real money? How can I trust you?</h3>
-    <p>Yes. Payments are collected by Stripe (a very common 3rd party payment platform). Hopefully, if you are wagering you know and trust me personally. If you don't, all I can say is that I am doing this for charity, and am a lot less sketchy than the typical crypto flavor of the day.</p>
+    <p>Yes. Payments are collected by Stripe (a very common 3rd party payment platform). Hopefully, if you are predicting you know and trust me personally.</p>
 
     <h3 style="color: yellow;">How will you handle payouts?</h3>
-    <p>Payouts will be done manually via venmo. I will collect your venmo handle at time of bet entry.</p>
+    <p>Payouts will be done manually via venmo. I will collect your venmo handle at time of bet entry. I will donate the charity portion to Misericordia once the events are over.</p>
+
+    <h3 style="color: yellow;">Why do you need my venmo handle?</h3>
+    <p>See above.</p>
 
     <h3 style="color: yellow;">Is this legal?</h3>
     <p>This platform is designed as a novelty prediction market with charitable donations and no guaranteed returns. It's not a licensed gambling operation.</p>
@@ -60,13 +64,66 @@
         <li>Dunk: clean dunk with a regulation women's ball on a 10 ft. hoop. Ratified by multiple witnesses and video.</li>
       </ol>
     </p>
+
+    <h3 style="color: yellow;">What charity am I supporting?</h3>
+    <p>Misericordia Heart of Mercy: <a href="https://www.misericordia.com/about/" target="_blank">Misericordia</a></p>
+
+    <h3 style="color: yellow;">I just want to support your run for charity.</h3>
+    <p>You can donate here: <a href="https://secure.e2rm.com/p2p/fundraising/391023/participant/5513984/en-CA" target="_blank">2025 Chicago Marathon Misericordia Donation</a></p>
+
+    <h3 style="color: yellow;">If I predict against you will you know?</h3>
+    <p>Yes. I will be able to see all predictions (and my twitter account will tweet all predictions publically). I won't judge any doubters! It's probably a good prediction!</p>
+
+    <h3 style="color: yellow;">Are you going to bet on yourself?</h3>
+    <p>Yes. I am going to participate, but only bet FOR both challenges. No black sox here.</p>
+
   </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 MurphDunks. All rights reserved.</p>
-    </div>
+  <footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
+    <p style="margin-bottom: 10px;">
+      <a href="https://github.com/dmurph77/murphdunks" target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://twitter.com/murphdunks target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-x-twitter"></i> <!-- or use fa-twitter if you prefer -->
+      </a>
+      <a href="https://www.strava.com/athletes/108903657" target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-strava"></i>
+      </a>
+    </p>
+    <p style="font-size: 0.9rem; color: gray;">
+      © 2025 MurphDunks. All rights reserved.
+    </p>
   </footer>
+
+  <script>
+    async function loadStats() {
+      try {
+        const apiBaseUrl = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://localhost:5000'
+  : '';
+
+const response = await fetch(`${apiBaseUrl}/api/bets`);
+        const data = await response.json();
+    
+        if (data.success) {
+          const stats = data.stats;
+    
+        // Totals
+        document.getElementById('totalBets').innerText = Math.round(stats.totalBets);
+        document.getElementById('charityAmount').innerText = Math.round(stats.charityAmount);
+        }
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+    
+    // Call it once the page loads
+    window.onload = () => {
+    loadStats();
+    setInterval(loadStats, 10000); // Refresh stats every 10 seconds
+    };
+</script>
 
 </body>
 </html>

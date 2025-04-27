@@ -6,61 +6,108 @@
   <title>About - MurphDunks</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="container nav-container">
-          <div class="branding">
-            <a href="index.html" class="brand-link">MurphDunks</a>
-          </div>
-          <nav class="nav-right">
-            <div class="stats-inline">
-              <span>Total Bets: $0 | Charity: $0</span>
-            </div>
-            <div class="nav-links">
-              <a href="about.html">About</a>
-              <a href="progress.html">Progress</a>
-              <a href="faq.html">FAQ</a>
-            </div>
-          </nav>
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="branding">
+        <a href="index.html" class="brand-link">MurphDunks</a>
+      </div>
+      <div class="nav-links">
+        <div style="flex: 1;">
+          <a href="faq.html">FAQ</a>
+          <a href="progress.html">Progress</a>
+          <a href="about.html">About</a> &nbsp;
         </div>
-      </header>
+        <div id="navTotals" style="flex-shrink: 0;">
+          Total Predictions: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <section class="container" style="padding-top: 20px;">
-    <h1>About MurphDunks</h1>
-    <p>Welcome to MurphDunks — a personal prediction market where you can bet for or against two fitness goals:</p>
+    <h1 style="color: yellow">About MurphDunks</h1>
+    <p>Welcome to MurphDunks — a market where you can predict for or against my 2025 athletic goals:</p>
     <ul style="margin-top: 1rem; line-height: 1.8;">
-      <li>Whether Murph will dunk a basketball by the end of 2025</li>
-      <li>Whether Murph will run a sub 3:10 marathon by the end of 2025</li>
+      <li>Whether I will dunk a basketball by the end of 2025</li>
+      <li>Whether I will run a sub 3:10 marathon by the end of 2025</li>
     </ul>
-    <p style="margin-top: 2rem;">The concept is simple: users place bets, odds shift dynamically, and 80% of the pool goes to the winning side. The remaining 20% goes to charity.</p>
-    <p style="margin-top: 1rem;">Follow the journey, support a cause, and make it fun.</p>
+    <p style="margin-top: 2rem;">The concept is simple: users place predictions, odds shift dynamically, and 80% of the pool goes to the winning side. The remaining 20% goes to charity.</p>
   </section>
 
   <section class="container" style="padding-top: 20px;">
-    <h2>Payout Structure</h2>
+    <h2 style="color: yellow">Payout Structure</h2>
     <p>
-      When you place a bet <strong>FOR</strong> or <strong>AGAINST</strong> a challenge,
+      When you place a prediction <strong>FOR</strong> or <strong>AGAINST</strong> a challenge,
       your contribution goes into a shared pot. Once the event is resolved:
     </p>
     <ul>
-      <li><strong>80%</strong> of the total pot is split among users on the correct side, proportional to their bets.</li>
-      <li><strong>20%</strong> goes to a selected charity.</li>
+      <li><strong>80%</strong> of the total pot is split among users on the correct side, proportional to their predictions.</li>
+      <li><strong>20%</strong> goes to charity (Misericordia).</li>
     </ul>
     <p>
       <strong>Example:</strong>  
-      If the pot has $600 total ($400 FOR, $200 AGAINST), and the goal is completed, the $400 FOR bettors win.
+      If the pot has $600 total ($400 FOR, $200 AGAINST), and the goal is completed, the $400 FOR predictors win.
       The payout per dollar bet is:
     </p>
-    <pre><code>Payout = (80% of Total Pot) × (Your Bet / Total Winning Side Bets)
+    <pre><code>Payout = (80% of Total Pot) × (Your Prediction / Total Winning Side Predictions)
          = $540 × (Your Bet / $400)</code></pre>
   </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 MurphDunks. All rights reserved.</p>
-    </div>
+  <section class="container" style="padding-top: 20px;">
+    <h1 style="color: yellow">About the Author</h1>
+    <p>My name is Dan Murphy. I am running the 2025 Chicago marathon, and also trying to dunk. I'm trying to make this a little bit more fun.</p>
+  </section>
+
+  <footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
+    <p style="margin-bottom: 10px;">
+      <a href="https://github.com/dmurph77/murphdunks" target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://twitter.com/murphdunks target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-x-twitter"></i> <!-- or use fa-twitter if you prefer -->
+      </a>
+      <a href="https://www.strava.com/athletes/108903657" target="_blank" style="margin: 0 10px; color: yellow;">
+        <i class="fab fa-strava"></i>
+      </a>
+    </p>
+    <p style="font-size: 0.9rem; color: gray;">
+      © 2025 MurphDunks. All rights reserved.
+    </p>
   </footer>
+
+  <script>
+    async function loadStats() {
+      try {
+        const apiBaseUrl = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://localhost:5000'
+  : '';
+
+const response = await fetch(`${apiBaseUrl}/api/bets`);
+        const data = await response.json();
+    
+        if (data.success) {
+          const stats = data.stats;
+    
+        // Totals
+        document.getElementById('totalBets').innerText = Math.round(stats.totalBets);
+        document.getElementById('charityAmount').innerText = Math.round(stats.charityAmount);
+        }
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+    
+    // Call it once the page loads
+    window.onload = () => {
+    loadStats();
+    setInterval(loadStats, 10000); // Refresh stats every 10 seconds
+    };
+
+
+    </script>
 
 </body>
 </html>

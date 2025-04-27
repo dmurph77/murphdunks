@@ -6,6 +6,7 @@
   <title>MurphDunks</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <header class="navbar">
@@ -13,24 +14,24 @@
       <div class="branding">
         <a href="index.html" class="brand-link">MurphDunks</a>
       </div>
-      <nav class="nav-right">
-        <div class="stats-inline">
-          <span>Total Bets: $0 | Charity: $0</span>
-        </div>
-        <div class="nav-links">
-          <a href="about.html">About</a>
-          <a href="progress.html">Progress</a>
+      <div class="nav-links">
+        <div style="flex: 1;">
           <a href="faq.html">FAQ</a>
+          <a href="progress.html">Progress</a>
+          <a href="about.html">About</a> &nbsp;
         </div>
-      </nav>
+        <div id="navTotals" style="flex-shrink: 0;">
+          Total Predictions: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
+        </div>
+      </div>
     </div>
   </header>
 
   <section class="hero">
     <div class="container hero-container">
       <h1>Will Murph Dunk or Run a Sub 3:10 Marathon?</h1>
-      <p>Place your bets. 80% of the pool goes to the winning side. 20% for charity.</p>
-      <a href="#betting" class="down-arrow">↓</a>
+      <p>Place your predictions. 80% of the pool goes to the winning side. 20% for charity.</p>
+      <a href="javascript:void(0);" id="down-arrow" onclick="scrollToBetting()">↓</a>
     </div>
   </section>
 
@@ -39,55 +40,290 @@
       <div class="bet-box">
         <h2>Will Murph Dunk?</h2>
         <div class="bet-stats">
-          <p><strong>$ For:</strong> $500</p>
-          <p><strong>$ Against:</strong> $200</p>
-          <p><strong>Implied Odds:</strong> 71%</p>
+          <p><div>$ For: $<span id="dunkFor">0</span></div></p>
+          <p><div>$ Against: $<span id="dunkAgainst">0</span></div></p>
+          <p><div>Implied Odds: <span id="dunkOdds">0%</span></div></p>
         </div>
-        <div class="chart-placeholder">Chart Placeholder</div>
+        <canvas id="dunkChart" width="300" height="150" style="margin-top: 10px;"></canvas>        
+        <input type="number" id="amountInputDunk" placeholder="Enter Amount ($)" min="1" step="1" style="margin-right: 10px; margin-top: 10px; padding: 8px; font-size: 1rem; background-color: black; color: white; border: 1px solid white;">
         <div class="bet-buttons">
-          <button class="buy-btn">Buy</button>
-          <button class="sell-btn">Sell</button>
+          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'for', 'dunk')">Buy Dunk</button>
+          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'against', 'dunk')">Sell Dunk</button>
         </div>
-        <canvas id="dunkChart" width="300" height="100"></canvas>
       </div>
 
       <div class="bet-box">
         <h2>Will Murph Run a 3:10 Marathon?</h2>
         <div class="bet-stats">
-          <p><strong>$ For:</strong> $300</p>
-          <p><strong>$ Against:</strong> $500</p>
-          <p><strong>Implied Odds:</strong> 37%</p>
+          <p><div>$ For: $<span id="marathonFor">0</span></div></p>
+          <p><div>$ Against: $<span id="marathonAgainst">0</span></div></p>
+          <p><div>Implied Odds: <span id="marathonOdds">0%</span></div></p>
         </div>
-        <div class="chart-placeholder">Chart Placeholder</div>
+        <canvas id="marathonChart" width="300" height="150" style="margin-top: 10px;"></canvas>        
+        <input type="number" id="amountInputMarathon" placeholder="Enter Amount ($)" min="1" step="1" style="margin-right: 10px; margin-top: 10px; padding: 8px; font-size: 1rem; background-color: black; color: white; border: 1px solid white;">
         <div class="bet-buttons">
-          <button class="buy-btn">Buy</button>
-          <button class="sell-btn">Sell</button>
+          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'for', 'marathon')">Buy Marathon</button>
+          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'against', 'marathon')">Sell Marathon</button>
         </div>
-        <canvas id="marathonChart" width="300" height="100"></canvas>
       </div>
+
+        <!-- Charity Donation Section -->
+<section id="charity-donation" style="background-color:black; color:white; text-align:center">
+  <h2 style="margin-bottom:20px;">Want to Support Without Predicting?</h2>
+  <a href="https://secure.e2rm.com/p2p/fundraising/391023/participant/5513984/en-CA" target="_blank" style="background:yellow; color:black; padding:15px 25px; border-radius:8px; font-weight:bold; text-decoration:none; font-size:1.1rem;">
+    Support my Run with Misericordia
+  </a>
+</section>
+
     </div>
-  </section>
-  
-    <!-- Twitter Integration Section (Smooth Transition) -->
-    <section id="twitter" class="twitter-feed">
-      <h2>Join the Conversation</h2>
-      <p>Check out the latest updates and tweets below! (Placeholder for Twitter Feed)</p>
-      <!-- Placeholder for Twitter Feed -->
-      <div class="twitter-widget-placeholder">
-        <p>Twitter widget will be integrated here once account/hashtag is created.</p>
-      </div>
+
+    <section id="twitter-feed" style="background-color:black; color:white; text-align:center; padding:30px;">
+      <h2 style="margin-bottom:20px;">Follow the Journey</h2>
+      <a class="twitter-timeline" href="https://twitter.com/murphdunks?ref_src=twsrc%5Etfw">Tweets by murphdunks</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 MurphDunks. All rights reserved.</p>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
+      <p style="margin-bottom: 10px;">
+        <a href="https://github.com/dmurph77/murphdunks" target="_blank" style="margin: 0 10px; color: yellow;">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://twitter.com/murphdunks target="_blank" style="margin: 0 10px; color: yellow;">
+          <i class="fab fa-x-twitter"></i> <!-- or use fa-twitter if you prefer -->
+        </a>
+        <a href="https://www.strava.com/athletes/108903657" target="_blank" style="margin: 0 10px; color: yellow;">
+          <i class="fab fa-strava"></i>
+        </a>
+      </p>
+      <p style="font-size: 0.9rem; color: gray;">
+        © 2025 MurphDunks. All rights reserved.
+      </p>
+    </footer>
+
+    <!-- Bet Modal -->
+<div id="betModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:black; border:1px solid white; padding:30px; border-radius:8px; max-width:400px; width:90%; text-align:center; color:white;">
+    <h2 id="betModalTitle" style="color:yellow"></h2>
+    <p style="color: white; margin-bottom: 20px; font-size: 0.9rem; text-align:left">
+      You’ll be securely redirected to Stripe for payment after filling this form.
+    </p>
+
+    <input id="firstNameInput" type="text" placeholder="First Name" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
+    <input id="lastNameInput" type="text" placeholder="Last Name" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
+    <input id="emailInput" type="email" placeholder="Email" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
+    <input id="venmoHandleInput" type="text" placeholder="Venmo Handle" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
+    <input id="messageInput" type="text" placeholder="Optional Message" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
+
+    <div style="margin-top:15px; color:gray;">
+      <input type="checkbox" id="tweetConsent" checked>
+      <label for="tweetConsent" style="font-size:0.9rem;">Post my bet and message to @murphdunks on Twitter ($$ not shown). We want to see the support/trash talk!</label>
     </div>
-  </footer>
+
+    <button onclick="confirmBet()" style="margin-top:10px; padding:10px 20px; background:yellow; color:black; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">Confirm Bet</button><br><br>
+    <button onclick="closeBetModal()" style="color:white; background:none; border:none; margin-top:5px; cursor:pointer;">Cancel</button>
+  </div>
+</div>
 
   <script>
     document.querySelector('.down-arrow').addEventListener('click', () => {
       document.querySelector('#betting').scrollIntoView({ behavior: 'smooth' });
     });
+  </script>
+
+<script>
+  async function loadStats() {
+    try {
+      const apiBaseUrl = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+      ? 'http://localhost:5000'
+      : '';
+
+      const response = await fetch(`${apiBaseUrl}/api/bets`);
+      const data = await response.json();
+  
+      if (data.success) {
+        const stats = data.stats;
+  
+        // Dunk stats
+        animateValue('dunkFor', Number(document.getElementById('dunkFor').innerText), stats.dunk.for);
+        animateValue('dunkAgainst', Number(document.getElementById('dunkAgainst').innerText), stats.dunk.against);
+        document.getElementById('dunkOdds').innerText = (stats.dunk.impliedOdds * 100).toFixed(1) + '%';
+
+        animateValue('marathonFor', Number(document.getElementById('marathonFor').innerText), stats.marathon.for);
+        animateValue('marathonAgainst', Number(document.getElementById('marathonAgainst').innerText), stats.marathon.against);
+        document.getElementById('marathonOdds').innerText = (stats.marathon.impliedOdds * 100).toFixed(1) + '%';
+
+        animateValue('totalBets', Number(document.getElementById('totalBets').innerText), stats.totalBets);
+        animateValue('charityAmount', Number(document.getElementById('charityAmount').innerText), stats.charityAmount); 
+      }
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  }
+  
+  window.onload = () => {
+    loadStats();
+    setInterval(loadStats, 10000); // refresh every 10 seconds
+  };
+
+  function animateValue(id, start, end, duration = 1000, isPercent = false) {
+  const obj = document.getElementById(id);
+  const range = end - start;
+  const increment = range / (duration / 10);
+  let current = start;
+  const step = () => {
+    current += increment;
+    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+      current = end;
+    }
+    if (isPercent) {
+      obj.innerText = Math.round(current) + '%';
+    } else {
+      obj.innerText = Math.round(current);
+    }
+    if (current !== end) {
+      setTimeout(step, 10);
+    }
+  };
+  step();
+}
+
+  </script>
+
+<script>
+  let currentAmount = 0;
+  let currentSide = '';
+  let currentEvent = '';
+  
+  function openBetModal(amount, side, event) {
+    currentAmount = Math.round(amount);
+    currentSide = side;
+    currentEvent = event;
+  
+    document.getElementById('betModalTitle').innerText = `Confirm: $${currentAmount} ${side.toUpperCase()} ${event.toUpperCase()}`;
+    document.getElementById('betModal').style.display = 'flex';
+  }
+  
+  function closeBetModal() {
+    document.getElementById('betModal').style.display = 'none';
+  }
+  
+  async function confirmBet() {
+    const firstName = document.getElementById('firstNameInput').value.trim();
+    const lastName = document.getElementById('lastNameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const venmoHandle = document.getElementById('venmoHandleInput').value.trim();
+    const message = document.getElementById('messageInput').value.trim();
+    const tweetConsent = document.getElementById('tweetConsent').checked;
+  
+    if (!firstName || !lastName || !email || !venmoHandle) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: currentAmount,
+          side: currentSide,
+          event: currentEvent,
+          firstName,
+          lastName,
+          email,
+          venmoHandle,
+          message,
+          tweetConsent 
+        })
+      });
+  
+      const data = await response.json();
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Checkout error:', error);
+    }
+  }
+  </script>
+
+<script>
+  function scrollToBetting() {
+    const bettingSection = document.getElementById('betting');
+    const offset = 80; // Adjust this depending on your sidebar height
+  
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = bettingSection.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+  
+    const offsetPosition = elementPosition - offset;
+  
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ChartData = {
+    labels: ['Start', 'Bet 1', 'Bet 2', 'Bet 3', 'Now'],
+    datasets: [{
+      data: [50, 53, 58, 55, 62], // Example odds data
+      borderColor: 'yellow',
+      backgroundColor: 'rgba(255,255,0,0.2)',
+      fill: true,
+      tension: 0.3
+    }]
+  };
+  
+  const ctxDunk = document.getElementById('dunkChart').getContext('2d');
+  const dunkOddsChart = new Chart(ctxDunk, {
+    type: 'line',
+    data: ChartData,
+    options: {
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { color: 'white' }
+        },
+        x: {
+          ticks: { color: 'white' }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+
+  const ctxMarathon = document.getElementById('marathonChart').getContext('2d');
+  const marathonOddsChart = new Chart(ctxMarathon, {
+    type: 'line',
+    data: ChartData,
+    options: {
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { color: 'white' }
+        },
+        x: {
+          ticks: { color: 'white' }
+        }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
+  });
+
   </script>
 
 </body>
