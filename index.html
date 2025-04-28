@@ -47,8 +47,8 @@
         <canvas id="dunkChart" width="300" height="150" style="margin-top: 10px;"></canvas>        
         <input type="number" id="amountInputDunk" placeholder="Enter Amount ($)" min="1" step="1" style="margin-right: 10px; margin-top: 10px; padding: 8px; font-size: 1rem; background-color: black; color: white; border: 1px solid white;">
         <div class="bet-buttons">
-          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'for', 'dunk')">Buy Dunk</button>
-          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'against', 'dunk')">Sell Dunk</button>
+          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'for', 'dunk')">Buy $DUNK</button>
+          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputDunk').value, 'against', 'dunk')">Sell $DUNK</button>
         </div>
       </div>
 
@@ -62,8 +62,8 @@
         <canvas id="marathonChart" width="300" height="150" style="margin-top: 10px;"></canvas>        
         <input type="number" id="amountInputMarathon" placeholder="Enter Amount ($)" min="1" step="1" style="margin-right: 10px; margin-top: 10px; padding: 8px; font-size: 1rem; background-color: black; color: white; border: 1px solid white;">
         <div class="bet-buttons">
-          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'for', 'marathon')">Buy Marathon</button>
-          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'against', 'marathon')">Sell Marathon</button>
+          <button class="buy-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'for', 'marathon')">Buy $CHI262 </button>
+          <button class="sell-button" onclick="openBetModal(document.getElementById('amountInputMarathon').value, 'against', 'marathon')">Sell $CHI262 </button>
         </div>
       </div>
 
@@ -124,12 +124,6 @@
     <button onclick="closeBetModal()" style="color:white; background:none; border:none; margin-top:5px; cursor:pointer;">Cancel</button>
   </div>
 </div>
-
-  <script>
-    document.querySelector('.down-arrow').addEventListener('click', () => {
-      document.querySelector('#betting').scrollIntoView({ behavior: 'smooth' });
-    });
-  </script>
 
 <script>
   async function loadStats() {
@@ -215,6 +209,16 @@
     const venmoHandle = document.getElementById('venmoHandleInput').value.trim();
     const message = document.getElementById('messageInput').value.trim();
     const tweetConsent = document.getElementById('tweetConsent').checked;
+
+    if (!validateEmail(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    function validateEmail(email) {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    }
   
     if (!firstName || !lastName || !email || !venmoHandle) {
       alert('Please fill out all required fields.');
