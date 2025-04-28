@@ -1,0 +1,22 @@
+{
+    "name": "murphdunks",
+    "version": "1.0.0",
+    "description": "Donation market where users bet if Murph will dunk or run a sub-3:10 marathon.",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "author": "Daniel Murphy",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.18.2",
+      "mongoose": "^7.4.2",
+      "dotenv": "^16.0.3",
+      "cors": "^2.8.5",
+      "stripe": "^11.22.0",
+      "body-parser": "^1.20.2",
+      "twitter-api-v2": "^1.15.0",
+      "pm2": "^5.3.0"
+    }
+  }
+  
