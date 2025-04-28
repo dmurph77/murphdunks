@@ -21,7 +21,7 @@
           <a href="about.html">About</a> &nbsp;
         </div>
         <div id="navTotals" style="flex-shrink: 0;">
-          Total Predictions: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
+          Total Donations: $<span id="totalBets" style="color: yellow">0</span>&nbsp;Charity: $<span id="charityAmount" style="color: yellow">0</span>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
   <section class="hero">
     <div class="container hero-container">
       <h1>Will Murph Dunk or Run a Sub 3:10 Marathon?</h1>
-      <p>Place your predictions. 80% of the pool goes to the winning side. 20% for charity.</p>
+      <p>Choose your side. 80% of the proceeds to the winning side. 20% for charity.</p>
       <a href="javascript:void(0);" id="down-arrow" onclick="scrollToBetting()">↓</a>
     </div>
   </section>
@@ -69,7 +69,7 @@
 
         <!-- Charity Donation Section -->
 <section id="charity-donation" style="background-color:black; color:white; text-align:center">
-  <h2 style="margin-bottom:20px;">Want to Support Without Predicting?</h2>
+  <h2 style="margin-bottom:20px;">Want to Support Without Picking a Side?</h2>
   <a href="https://secure.e2rm.com/p2p/fundraising/391023/participant/5513984/en-CA" target="_blank" style="background:yellow; color:black; padding:15px 25px; border-radius:8px; font-weight:bold; text-decoration:none; font-size:1.1rem;">
     Support my Run with Misericordia
   </a>
@@ -267,64 +267,121 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const ChartData = {
-    labels: ['Start', 'Bet 1', 'Bet 2', 'Bet 3', 'Now'],
+// Setup for Dunk Chart
+const ctxDunk = document.getElementById('dunkChart').getContext('2d');
+const dunkOddsChart = new Chart(ctxDunk, {
+  type: 'line',
+  data: {
+    labels: [],
     datasets: [{
-      data: [50, 53, 58, 55, 62], // Example odds data
+      label: 'Dunk Implied Odds (%)',
+      data: [],
       borderColor: 'yellow',
       backgroundColor: 'rgba(255,255,0,0.2)',
       fill: true,
       tension: 0.3
     }]
-  };
-  
-  const ctxDunk = document.getElementById('dunkChart').getContext('2d');
-  const dunkOddsChart = new Chart(ctxDunk, {
-    type: 'line',
-    data: ChartData,
-    options: {
-      scales: {
-        y: {
-          min: 0,
-          max: 100,
-          ticks: { color: 'white' }
-        },
-        x: {
-          ticks: { color: 'white' }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
+  },
+  options: {
+    scales: {
+      y: { min: 0, max: 100, ticks: { color: 'white' } },
+      x: { ticks: { color: 'white' } }
+    },
+    plugins: {
+      legend: { display: false }
     }
-  });
+  }
+});
 
-  const ctxMarathon = document.getElementById('marathonChart').getContext('2d');
-  const marathonOddsChart = new Chart(ctxMarathon, {
-    type: 'line',
-    data: ChartData,
-    options: {
-      scales: {
-        y: {
-          min: 0,
-          max: 100,
-          ticks: { color: 'white' }
-        },
-        x: {
-          ticks: { color: 'white' }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
+// Setup for Marathon Chart
+const ctxMarathon = document.getElementById('marathonChart').getContext('2d');
+const marathonOddsChart = new Chart(ctxMarathon, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Marathon Implied Odds (%)',
+      data: [],
+      borderColor: 'yellow',
+      backgroundColor: 'rgba(255,255,0,0.2)',
+      fill: true,
+      tension: 0.3
+    }]
+  },
+  options: {
+    scales: {
+      y: { min: 0, max: 100, ticks: { color: 'white' } },
+      x: { ticks: { color: 'white' } }
+    },
+    plugins: {
+      legend: { display: false }
     }
-  });
+  }
+});
 
-  </script>
+async function fetchAndUpdateOddsCharts() {
+  try {
+    const response = await fetch('http://localhost:5000/api/bets');
+    const raw = await response.json();
+    const bets = raw.bets;
+
+    console.log('Fetched Bets:', bets);
+
+    // --- Build Dunk Chart Data ---
+    const dunkBets = bets
+      .filter(bet => bet.event === 'dunk')
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+    let dunkFor = 0;
+    let dunkAgainst = 0;
+    const dunkImpliedOddsHistory = [];
+    const dunkLabels = [];
+
+    dunkBets.forEach((bet, index) => {
+      if (bet.side === 'for') dunkFor += bet.amount;
+      else if (bet.side === 'against') dunkAgainst += bet.amount;
+
+      const total = dunkFor + dunkAgainst;
+      const impliedOdds = total > 0 ? (dunkFor / total) * 100 : 50;
+      dunkImpliedOddsHistory.push(impliedOdds.toFixed(1));
+      dunkLabels.push(`Bet ${index + 1}`);
+    });
+
+    dunkOddsChart.data.labels = dunkLabels;
+    dunkOddsChart.data.datasets[0].data = dunkImpliedOddsHistory;
+    dunkOddsChart.update();
+
+    // --- Build Marathon Chart Data ---
+    const marathonBets = bets
+      .filter(bet => bet.event === 'marathon')
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+    let marathonFor = 0;
+    let marathonAgainst = 0;
+    const marathonImpliedOddsHistory = [];
+    const marathonLabels = [];
+
+    marathonBets.forEach((bet, index) => {
+      if (bet.side === 'for') marathonFor += bet.amount;
+      else if (bet.side === 'against') marathonAgainst += bet.amount;
+
+      const total = marathonFor + marathonAgainst;
+      const impliedOdds = total > 0 ? (marathonFor / total) * 100 : 50;
+      marathonImpliedOddsHistory.push(impliedOdds.toFixed(1));
+      marathonLabels.push(`Bet ${index + 1}`);
+    });
+    console.log('Raw Response:', bets);
+
+    marathonOddsChart.data.labels = marathonLabels;
+    marathonOddsChart.data.datasets[0].data = marathonImpliedOddsHistory;
+    marathonOddsChart.update();
+
+  } catch (error) {
+    console.error('Error fetching bets or updating charts:', error);
+  }
+}
+fetchAndUpdateOddsCharts();
+</script>
 
 </body>
 </html>
