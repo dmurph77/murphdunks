@@ -20,7 +20,7 @@ let bets = {
   function updateTotals() {
     const dunkTotal = bets.dunk.for * 10 + bets.dunk.against * 10;
     const marathonTotal = bets.marathon.for * 10 + bets.marathon.against * 10;
-    const charityTotal = (dunkTotal + marathonTotal) * 0.1;
+    const charityTotal = (dunkTotal + marathonTotal) * 0.2;
   
     document.getElementById('dunk-total').textContent = dunkTotal;
     document.getElementById('marathon-total').textContent = marathonTotal;

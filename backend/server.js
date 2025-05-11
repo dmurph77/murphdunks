@@ -96,7 +96,10 @@ app.post('/webhook', async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+  console.log('📢 Stripe event type:', event.type);
+
   if (event.type === 'checkout.session.completed') {
+
     const session = event.data.object;
 
     // Save bet to MongoDB from metadata
