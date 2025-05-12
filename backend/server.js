@@ -41,6 +41,9 @@ app.listen(PORT, () => {
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const isLocal = process.env.NODE_ENV !== 'production';
+const baseURL = isLocal ? 'http://localhost:5500' : 'https://murphdunks.com'; // or your real domain
+
 // Create Checkout Session
 app.post('/api/checkout', async (req, res) => {
   const { amount, side, event, firstName, lastName, email, venmoHandle, message, tweetConsent} = req.body;
@@ -62,8 +65,8 @@ app.post('/api/checkout', async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: 'http://localhost:5500/success.html', // (you can customize later)
-      cancel_url: 'http://localhost:5500/cancel.html',   // (you can customize later)
+      success_url: `${baseURL}/success.html`,
+      cancel_url: `${baseURL}/cancel.html`,
       customer_email: email, // optional, but nice!
       metadata: {
         side,

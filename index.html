@@ -126,6 +126,10 @@
 </div>
 
 <script>
+
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const apiBase = isLocal ? 'http://localhost:5000' : '';
+
   async function loadStats() {
     try {
       const apiBaseUrl = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
@@ -234,7 +238,7 @@
     }
   
     try {
-      const response = await fetch('http://localhost:5000/api/checkout', {
+      const response = await fetch(`${apiBase}/api/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -333,7 +337,7 @@ const marathonOddsChart = new Chart(ctxMarathon, {
 
 async function fetchAndUpdateOddsCharts() {
   try {
-    const response = await fetch('http://localhost:5000/api/bets');
+    const response = await fetch(`${apiBase}/api/checkout`);
     const raw = await response.json();
     const bets = raw.bets;
 
