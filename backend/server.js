@@ -42,7 +42,7 @@ app.listen(PORT, () => {
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const isLocal = process.env.NODE_ENV !== 'production';
-const baseURL = isLocal ? 'http://localhost:5500' : 'https://murphdunks.com'; // or your real domain
+const baseURL = isLocal ? 'http://localhost:5000' : 'https://murphdunks.com'; // or your real domain
 
 // Create Checkout Session
 app.post('/api/checkout', async (req, res) => {
@@ -57,16 +57,16 @@ app.post('/api/checkout', async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: `${side.toUpperCase()} - ${event.toUpperCase()} bet`,
-              description: `Bet placed by ${firstName} ${lastName}`,
+              name: `${side.toUpperCase()} - ${event.toUpperCase()} Donation`,
+              description: `Donation placed by ${firstName} ${lastName}`,
             },
             unit_amount: Math.round(amount * 100),
           },
           quantity: 1,
         },
       ],
-      success_url: `${baseURL}/success.html`,
-      cancel_url: `${baseURL}/cancel.html`,
+      success_url: 'https://murphdunks.com/success.html',
+      cancel_url: 'https://murphdunks.com/cancel.html',
       customer_email: email, // optional, but nice!
       metadata: {
         side,
