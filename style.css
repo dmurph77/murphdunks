@@ -314,3 +314,47 @@ body {
   .sell-button:hover {
     background-color: darkred;
   }
+
+  .nav-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: block;
+    }
+  
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      background-color: black;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 999;
+    }
+  
+    .nav-links a,
+    .nav-links span {
+      padding: 12px;
+      display: block;
+      width: 100%;
+      color: white;
+      border-top: 1px solid #333;
+    }
+  
+    .nav-links.open {
+      display: flex;
+    }
+  }

@@ -15,16 +15,14 @@
       <div class="branding">
         <a href="index.html" class="brand-link">MurphDunks</a>
       </div>
-      <div class="nav-links">
-        <div style="flex: 1;">
-          <a href="faq.html">FAQ</a>
-          <a href="progress.html">Progress</a>
-          <a href="about.html">About</a> &nbsp;
-        </div>
-        <div id="navTotals" style="flex-shrink: 0;">
-          Total Donations: $<span id="totalBets" style="color: yellow">0</span>
-        </div>
-      </div>
+      <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="faq.html">FAQ</a>
+        <a href="progress.html">Progress</a>
+        <a href="about.html">About</a>
+        <span id="navTotals">Total Donations: $<span id="totalBets" style="color: yellow">0</span></span>
+      </nav>
     </div>
   </header>
 
