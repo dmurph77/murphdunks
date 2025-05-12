@@ -337,7 +337,7 @@ const marathonOddsChart = new Chart(ctxMarathon, {
 
 async function fetchAndUpdateOddsCharts() {
   try {
-    const response = await fetch(`${apiBase}/api/checkout`);
+    const response = await fetch(`${apiBase}/api/bets`);
     const raw = await response.json();
     const bets = raw.bets;
 
