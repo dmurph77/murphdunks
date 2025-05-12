@@ -110,7 +110,6 @@
     <input id="firstNameInput" type="text" placeholder="First Name" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
     <input id="lastNameInput" type="text" placeholder="Last Name" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
     <input id="emailInput" type="email" placeholder="Email" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
-    <input id="venmoHandleInput" type="text" placeholder="Venmo Handle" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
     <input id="messageInput" type="text" placeholder="Optional Message" style="width:90%; margin:8px; padding:8px; background-color: black; color: white; border: 1px solid white;"><br>
 
     <div style="margin-top:15px; color:gray;">
@@ -207,7 +206,6 @@ const apiBase = isLocal ? 'http://localhost:5000' : '';
     const firstName = document.getElementById('firstNameInput').value.trim();
     const lastName = document.getElementById('lastNameInput').value.trim();
     const email = document.getElementById('emailInput').value.trim();
-    const venmoHandle = document.getElementById('venmoHandleInput').value.trim();
     const message = document.getElementById('messageInput').value.trim();
     const tweetConsent = document.getElementById('tweetConsent').checked;
 
@@ -246,7 +244,6 @@ const apiBase = isLocal ? 'http://localhost:5000' : '';
           firstName,
           lastName,
           email,
-          venmoHandle,
           message,
           tweetConsent 
         })

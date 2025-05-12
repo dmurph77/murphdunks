@@ -5,13 +5,12 @@ const Bet = require('../../models/Bet');
 // POST /api/bets
 router.post('/', async (req, res) => {
   try {
-    const { firstName, lastName, email, venmoHandle, amount, side, event, message } = req.body;
+    const { firstName, lastName, email, amount, side, event, message } = req.body;
 
     const newBet = new Bet({
       firstName,
       lastName,
       email,
-      venmoHandle,
       amount,
       side,
       event,

@@ -46,7 +46,7 @@ const baseURL = isLocal ? 'http://localhost:5500' : 'https://murphdunks.com'; //
 
 // Create Checkout Session
 app.post('/api/checkout', async (req, res) => {
-  const { amount, side, event, firstName, lastName, email, venmoHandle, message, tweetConsent} = req.body;
+  const { amount, side, event, firstName, lastName, email, message, tweetConsent} = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -73,7 +73,6 @@ app.post('/api/checkout', async (req, res) => {
         event,
         firstName,
         lastName,
-        venmoHandle,
         message,
         tweetConsent 
       }
@@ -113,7 +112,6 @@ app.post('/webhook', async (req, res) => {
       firstName: session.metadata.firstName,
       lastName: session.metadata.lastName,
       email: session.customer_email,
-      venmoHandle: session.metadata.venmoHandle,
       message: session.metadata.message,
       status: 'paid',
       createdAt: new Date()
