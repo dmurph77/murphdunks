@@ -360,7 +360,7 @@ async function fetchAndUpdateOddsCharts() {
       const total = dunkFor + dunkAgainst;
       const impliedOdds = total > 0 ? (dunkFor / total) * 100 : 50;
       dunkImpliedOddsHistory.push(impliedOdds.toFixed(1));
-      dunkLabels.push(`Bet ${index + 1}`);
+      dunkLabels.push(`Dono ${index + 1}`);
     });
 
     dunkOddsChart.data.labels = dunkLabels;
@@ -384,7 +384,7 @@ async function fetchAndUpdateOddsCharts() {
       const total = marathonFor + marathonAgainst;
       const impliedOdds = total > 0 ? (marathonFor / total) * 100 : 50;
       marathonImpliedOddsHistory.push(impliedOdds.toFixed(1));
-      marathonLabels.push(`Bet ${index + 1}`);
+      marathonLabels.push(`Dono ${index + 1}`);
     });
     console.log('Raw Response:', bets);
 
