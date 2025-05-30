@@ -20,7 +20,19 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd ~/murphdunks/backend
+            cd ~/murphdunks
             git pull origin main
+
+            # Copy frontend files to Nginx web root
+            sudo cp index.html /var/www/html/
+            sudo cp style.css /var/www/html/
+            sudo cp script.js /var/www/html/
+            sudo cp about.html /var/www/html/
+            sudo cp faq.html /var/www/html/
+            sudo cp progress.html /var/www/html/
+            sudo cp cancel.html /var/www/html/
+            sudo cp success.html /var/www/html/
+
+            cd backend
             npm install
             pm2 restart murphdunks
