@@ -29,6 +29,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('✅ Connected to MongoDB'))
 .catch((err) => console.error('❌ MongoDB connection error:', err));
 
+// Triggering Github Actions Deploy
+
 // Import the bets route
 const betsRouter = require('./routes/api/bets');
 app.use('/api/bets', betsRouter);                 
