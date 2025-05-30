@@ -205,25 +205,6 @@ body {
     color: #fff;
     margin-top: 50px;
   }
-  
-  .twitter-widget-placeholder {
-    background-color: #333;
-    padding: 30px;
-    border-radius: 10px;
-    color: #fff;
-    margin-top: 20px;
-    border: 2px dashed #fff; /* Placeholder border */
-  }
-  
-  .twitter-feed h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .twitter-widget-placeholder p {
-    font-size: 1.2rem;
-    color: #ccc;
-  }
 
   .chart-placeholder {
     margin-top: 15px;
