@@ -50,55 +50,57 @@
   </header>
 
 <main class="content">
-  <section class="container" style="padding-top: 20px;">
-    <h1 style="text-align: center;">Marathon Progress</h1>
+<section class="container" style="padding-top: 20px;">
+  <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Marathon Progress</h1>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 30px 0;">
-      <!-- Summary Widget -->
-      <div style="flex: 1 1 300px; max-width: 400px;">
-        <iframe
-          height="220"
-          width="100%"
-          frameborder="0"
-          scrolling="no"
-          src="https://www.strava.com/athletes/108903657/latest-rides/09a9a0e506b40d2fbd63a634cae5d6328f5cf93a"
-          style="border-radius: 10px; border: 2px solid #333;">
-        </iframe>
-      </div>
-
-      <!-- Recent Activities Widget -->
-      <div style="flex: 1 1 300px; max-width: 400px;">
-        <iframe
-          height="480"
-          width="100%"
-          frameborder="0"
-          scrolling="no"
-          src="https://www.strava.com/athletes/108903657/activity-summary/09a9a0e506b40d2fbd63a634cae5d6328f5cf93a"
-          style="border-radius: 10px; border: 2px solid #333;">
-        </iframe>
-      </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+    <!-- Summary Widget -->
+    <div style="flex: 1 1 350px; max-width: 500px;">
+      <iframe
+        src="https://strava-tools.vercel.app/athlete-summary-widget?athleteId=108903657&darkMode=true"
+        width="100%"
+        height="250"
+        frameborder="0"
+        style="border-radius: 10px;">
+      </iframe>
     </div>
-  </section>
 
-  <section class="container" style="padding-bottom: 50px;">
-    <h1 style="text-align: center;">Dunking Progress</h1>
-    <div class="progress-section">
-      <div class="progress-card">
-        <h3>Vertical Jump</h3>
-        <p>Data coming soon.</p>
-      </div>
-
-      <div class="progress-card">
-        <h3>Training Log</h3>
-        <p>Data coming soon.</p>
-      </div>
-
-      <div class="progress-card">
-        <h3>Next Assessment</h3>
-        <p>To be scheduled.</p>
-      </div>
+    <!-- Recent Activities Widget -->
+    <div style="flex: 2 1 600px; max-width: 700px;">
+      <iframe
+        src="https://strava-tools.vercel.app/athlete-activity-widget?athleteId=108903657&darkMode=true"
+        width="100%"
+        height="600"
+        frameborder="0"
+        scrolling="yes"
+        style="border-radius: 10px;">
+      </iframe>
     </div>
-  </section>
+  </div>
+
+  <!-- CTA -->
+  <p style="margin-top: 20px; font-size: 1.1rem;">
+    👉 <a href="https://www.strava.com/athletes/108903657" target="_blank" style="color: yellow;">See more of my running progress on Strava</a>
+  </p>
+
+  <hr style="margin: 60px 0; border-color: #333;">
+
+  <h1 style="font-size: 2.5rem; margin-bottom: 30px;">Dunking Progress</h1>
+
+  <div class="progress-section">
+    <div class="progress-card">
+      <h3>Latest Jump Test</h3>
+      <p><em>Vertical:</em> -- in</p>
+      <p><em>Approach:</em> -- in</p>
+      <p><em>Notes:</em> Not yet recorded</p>
+    </div>
+
+    <div class="progress-card">
+      <h3>Chart Placeholder</h3>
+      <div class="chart-placeholder">Dunking chart or video coming soon</div>
+    </div>
+  </div>
+</section>
 </main>
 
   <script>
