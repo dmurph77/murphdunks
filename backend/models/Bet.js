@@ -8,6 +8,7 @@ const BetSchema = new mongoose.Schema({
   side: { type: String, enum: ['for', 'against'], required: true },
   event: { type: String, enum: ['dunk', 'marathon'], required: true },
   message: { type: String }, // optional
+    status: { type: String, enum: ['paid', 'pending'], default: 'pending' }, 
   createdAt: { type: Date, default: Date.now }
 });
 

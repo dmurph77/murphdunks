@@ -90,7 +90,7 @@ app.post('/api/checkout', async (req, res) => {
 // Stripe Webhook Endpoint
 app.post('/webhook', async (req, res) => {
   const sig = req.headers['stripe-signature'];
-  
+
   let event;
 
   try {
@@ -103,41 +103,44 @@ app.post('/webhook', async (req, res) => {
   console.log('📢 Stripe event type:', event.type);
 
   if (event.type === 'checkout.session.completed') {
-
     const session = event.data.object;
 
     // Save bet to MongoDB from metadata
-    const newBet = new Bet({
-      amount: session.amount_total / 100,
-      side: session.metadata.side,
-      event: session.metadata.event,
-      firstName: session.metadata.firstName,
-      lastName: session.metadata.lastName,
-      email: session.customer_email,
-      message: session.metadata.message,
-      status: 'paid',
-      createdAt: new Date()
-    });
+    try {
+      const newBet = new Bet({
+        amount: session.amount_total / 100,
+        side: session.metadata.side,
+        event: session.metadata.event,
+        firstName: session.metadata.firstName,
+        lastName: session.metadata.lastName,
+        email: session.customer_email,
+        message: session.metadata.message,
+        status: 'paid',
+        createdAt: new Date()
+      });
 
-    await newBet.save();
-    console.log('✅ Bet saved from successful Stripe payment!');
+      await newBet.save();
+      console.log('✅ Bet saved from successful Stripe payment!');
+    } catch (err) {
+      console.error('❌ Failed to save Bet to DB:', err.message);
+    }
 
-    // ✅ New: Only Tweet if user consented
+    // ✅ Only Tweet if user consented
     if (session.metadata.tweetConsent === 'true') {
       try {
         const firstName = session.metadata.firstName;
         const lastInitial = session.metadata.lastName[0] || '';
         const side = session.metadata.side.toUpperCase();
         const eventName = session.metadata.event.toUpperCase();
-    
+
         // Clip the message if it's too long
         let message = session.metadata.message || '';
         if (message.length > 120) {
           message = message.substring(0, 117) + '...';
         }
-    
+
         const tweetText = `${firstName} ${lastInitial}. just donated ${side} Murph to ${eventName}! 🏀 Message: "${message}" #MurphDunks`;
-    
+
         await twitterClient.v2.tweet(tweetText);
         console.log('✅ Tweet posted!');
       } catch (err) {
