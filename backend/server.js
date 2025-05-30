@@ -136,7 +136,7 @@ app.post('/webhook', async (req, res) => {
           message = message.substring(0, 117) + '...';
         }
     
-        const tweetText = `${firstName} ${lastInitial}. just bet ${side} Murph to ${eventName}! 🏀 Message: "${message}" #MurphDunks`;
+        const tweetText = `${firstName} ${lastInitial}. just donated ${side} Murph to ${eventName}! 🏀 Message: "${message}" #MurphDunks`;
     
         await twitterClient.v2.tweet(tweetText);
         console.log('✅ Tweet posted!');
