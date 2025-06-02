@@ -62,14 +62,25 @@
 <section style="display: flex; justify-content: center; margin-bottom: 30px;">
   <div style="background-color: #222; color: white; padding: 25px; border: 1px solid #ccc; border-radius: 12px; max-width: 800px; width: 100%; text-align: center;">
     <h2 style="font-size: 1.8rem; margin-bottom: 10px;">How It Works</h2>
+
     <p style="font-size: 1.1rem; margin-bottom: 10px;">
-      Pick a side and donate — will I dunk or run sub-3:10?
+      Pick a side — will I dunk or run sub-3:10? It’s all for charity.
     </p>
+
     <p style="font-size: 1.1rem; margin-bottom: 10px;">
-      If you back the right outcome, I’ll send you a small gift as thanks 🎁
+      Use the <strong style="color: #00ff00;">Buy</strong> and <strong style="color: #ff4d4d;">Sell</strong> buttons below to place your donation.
     </p>
+
+    <p style="font-size: 1.1rem; margin-bottom: 10px;">
+      If you're right, I’ll send you a small thank-you gift 🎁
+    </p>
+
+    <p style="font-size: 1.1rem; margin-bottom: 10px;">
+      <strong>Total Raised:</strong> $<span id="totalBetsDisplay" style="color: yellow;">0</span> / $2,000 goal
+    </p>
+
     <p style="font-size: 1rem; color: gray;">
-      More questions? <a href="faq.html" style="color: yellow; text-decoration: underline;">Check out the FAQ</a>
+      Questions? <a href="faq.html" style="color: yellow; text-decoration: underline;">Check out the FAQ</a>
     </p>
   </div>
 </section>
@@ -201,6 +212,7 @@ const apiBase = isLocal ? 'http://localhost:5000' : '';
         document.getElementById('marathonOdds').innerText = (stats.marathon.impliedOdds * 100).toFixed(1) + '%';
 
         animateValue('totalBets', Number(document.getElementById('totalBets').innerText), stats.totalBets);
+        animateValue('totalBetsDisplay', Number(document.getElementById('totalBetsDisplay').innerText), stats.totalBets);
       }
     } catch (error) {
       console.error('Error loading stats:', error);
