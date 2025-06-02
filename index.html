@@ -101,17 +101,27 @@
     </div>
 
 <section id="twitter-feed" style="background-color:black; color:white; text-align:center; padding:30px;">
-
-  <!-- Official Twitter Feed | MurphDunks -->
-  <a class="twitter-timeline" 
-     data-theme="dark" 
-     href="https://twitter.com/MurphDunks?ref_src=twsrc%5Etfw">
-     Tweets by @MurphDunks
-  </a>
+  <h2 style="margin-bottom: 20px;">Tweets by @MurphDunks</h2>
+  <div id="twitter-embed" style="display: flex; justify-content: center;">
+    <a class="twitter-timeline"
+       data-theme="dark"
+       data-height="600"
+       href="https://twitter.com/MurphDunks?ref_src=twsrc%5Etfw">
+       Loading tweets...
+    </a>
+  </div>
 </section>
 
 <!-- Load Twitter Embed Script (only once per page) -->
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+  window.addEventListener("load", function () {
+    if (window.twttr && twttr.widgets) {
+      twttr.widgets.load(document.getElementById("twitter-embed"));
+    }
+  });
+</script>
 
     <footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
       <p style="margin-bottom: 10px;">
