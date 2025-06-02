@@ -102,26 +102,23 @@
 
 <section id="twitter-feed" style="background-color:black; color:white; text-align:center; padding:30px;">
   <h2 style="margin-bottom: 20px;">Tweets by @MurphDunks</h2>
-  <div id="twitter-embed" style="display: flex; justify-content: center;">
-    <a class="twitter-timeline"
-       data-theme="dark"
-       data-height="600"
-       href="https://twitter.com/MurphDunks?ref_src=twsrc%5Etfw">
-       Loading tweets...
-    </a>
+
+  <div style="max-width: 100%; overflow: hidden;">
+    <iframe 
+      src="https://rss.app/embed/v1/list/4ntjDNjqQHwZ1quD" 
+      width="100%" 
+      height="600" 
+      frameborder="0" 
+      scrolling="no"
+      style="border: none; max-width: 850px; width: 100%; margin: 0 auto;">
+    </iframe>
   </div>
+
+  <a href="https://twitter.com/MurphDunks" target="_blank"
+     style="display: inline-block; margin-top: 20px; padding: 10px 20px; background: yellow; color: black; font-weight: bold; text-decoration: none; border-radius: 8px; font-size: 1rem;">
+    View More Tweets
+  </a>
 </section>
-
-<!-- Load Twitter Embed Script (only once per page) -->
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<script>
-  window.addEventListener("load", function () {
-    if (window.twttr && twttr.widgets) {
-      twttr.widgets.load(document.getElementById("twitter-embed"));
-    }
-  });
-</script>
 
     <footer style="text-align: center; margin-top: 50px; padding: 20px; font-size: 1.1rem; color: white;">
       <p style="margin-bottom: 10px;">
