@@ -123,8 +123,6 @@
   </a>
 </section>
 
-    </div>
-
 <section id="twitter-feed" style="background-color:black; color:white; text-align:center; padding:30px;">
   <h2 style="margin-bottom: 20px;">Follow the journey</h2>
 
@@ -136,8 +134,17 @@
        href="https://twitter.com/murphdunks?ref_src=twsrc%5Etfw">
       Tweets by @murphdunks
     </a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
+
+  <!-- Move the script OUTSIDE the div -->
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof twttr !== "undefined" && twttr.widgets) {
+        twttr.widgets.load();
+      }
+    });
+  </script>
 
   <div style="margin-top: 20px;">
     <a href="https://twitter.com/MurphDunks" target="_blank"
